@@ -1,0 +1,400 @@
+<!doctype html>
+<html>
+<head>
+	<title>Line Chart</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+	<script src="./js/Chart.min.js"></script>
+	<script src="./js/utils.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="./style.css">
+	
+
+</head>
+
+<body>
+	<div id="fig_A" class="container mainFig">
+		<div class="jumbotron" id='figa_Area' style="background-color: #f2f4f7;">
+		  <h2 class="d-flex flex-column justify-content-center align-items-center">不同族群各時間點當下的人潮</h2>
+		  <hr class="my-4">
+			<span id ='figA_comment_1' class="customFont">
+				<!-- fix it on js  -->
+				<ul>
+					<li>
+						<p>在活動期間 
+							<span class="badge badge-pill fontCust badge-primary">a</span> 的族群於
+							<span class="badge badge-pill fontCust badge-dark">d</span>時候人潮達到最高峰，現場當下約有
+							<span class="badge badge-pill fontCust badge-success">c</span>人
+						</p>
+					</li>
+				</ul>
+			</span>
+			<span id ='figA_comment_2' class="customFont">
+				<!-- fix it on js  -->
+				<ul>
+					<li>
+						<p>在
+							<span class="badge badge-pill fontCust badge-primary">A</span>時候，活動人潮達到最高峰，現場當下約有
+							<span class="badge badge-pill fontCust badge-success">B</span>人
+						</p>
+					</li>
+				</ul>
+			</span>
+		</div>
+		<div class="chart-container row">
+			<canvas id="canvas_figA" height="130">不同族群各時間點當下的人潮</canvas>
+		</div>
+	</div>
+
+
+
+
+	<div id="fig_b_and_c" class="container mainFig">
+		<div class="jumbotron" id='figb_Area' style='background-color: #f2f4f7;'>
+			<h2 class="d-flex flex-column justify-content-center align-items-center">停留時間統計</h2>
+			<hr class="my-4">
+			<span id ='figB_comment_1'>
+				<!-- fix it on js  -->
+				<ul>
+					<li>
+						<p> 停留時間區間以 
+							<span class="badge badge-pill fontCust badge-primary">a</span> 族群的人占比最高為 
+							<span class="badge badge-pill fontCust badge-info">b%</span> ，其次為
+							<span class="badge badge-pill fontCust badge-primary">c</span> 族群，其占比為
+							<span class="badge badge-pill fontCust badge-info">d%</span> ，前兩者差異為
+							<span class="badge badge-pill fontCust badge-warning"> e% </span>
+						</p>
+					</li>
+				</ul>
+			</span>
+			<span id ='figC_comment_1'>
+				<!-- fix it on js  -->
+				<ul>
+					<li>
+						<p>活動期間
+							<span class="badge badge-pill fontCust badge-primary">A</span> 族群約有
+							<span class="badge badge-pill fontCust badge-success">B</span> 人，其平均停留時間為
+							<span class="badge badge-pill fontCust badge-secondary">c</span> 分鐘，
+							<span class="badge badge-pill fontCust badge-primary">停留10分鐘以上</span> 的共有
+							<span class="badge badge-pill fontCust badge-success">D</span> 人，總平均停留時間為
+							<span class="badge badge-pill fontCust badge-secondary">E</span> 分鐘
+						</p>
+					</li>
+				</ul>
+			</span>
+		</div>
+		<div class="row">
+			<div style="width:50%;" id="fig_b" class="col chart-container">
+				<canvas id="canvas_figb" height="300"></canvas>
+			</div>
+			<div style="width:50%;" id="fig_c" class="col chart-container">
+				<canvas id="canvas_figc" height="300"></canvas>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div id="fig_D" class="container mainFig">
+		<div class="jumbotron" id='figd_Area' style='background-color: #f2f4f7;'>
+		  <h2 class="d-flex flex-column justify-content-center align-items-center">各縣市不同時段的當下人潮</h2>
+		  <hr class="my-4">
+			<span id ='figD_comment_1'>
+				<!-- fix it on js  -->
+				<ul>
+					<li>
+				<p>以當地 
+					<span class="badge badge-pill fontCust badge-primary">a</span> 的人次為多，且當
+					<span class="badge badge-pill fontCust badge-dark">b</span> 時現場人數達到最高約有
+					<span class="badge badge-pill fontCust badge-success">c</span> 的人，相較於活動最低點
+					<span class="badge badge-pill fontCust badge-dark">d</span> 的時後現場人數有
+					<span class="badge badge-pill fontCust badge-success">e</span> ，約有
+					<span class="badge badge-pill fontCust badge-warning">f</span> 倍 
+				</p>
+					</li>
+				</ul>
+			</span>
+		</div>
+		<div class="chart-container row">
+			<canvas id="canvas_figD" height="130">各縣市不同時段的當下人潮</canvas>
+		</div>
+	</div>
+
+
+
+
+	<div id="fig_E" class="container mainFig">
+		<div class="jumbotron" id='fige_Area' style='background-color: #f2f4f7;'>
+		  <h2 class="d-flex flex-column justify-content-center align-items-center">各鄉鎮不同時段的當下人潮</h2>
+		  <hr class="my-4">
+			<span id ='figE_comment_1'>
+				<!-- fix it on js  -->
+				<ul>
+					<li>
+				<p>
+					<span class="badge badge-pill fontCust badge-primary">a</span> 的居民以
+					<span class="badge badge-pill fontCust badge-dark">b</span> 時當下現場人數達到最高約有
+					<span class="badge badge-pill fontCust badge-success">c</span> 的人，相較於活動最低點
+					<span class="badge badge-pill fontCust badge-dark">d</span> 時的人數
+					<span class="badge badge-pill fontCust badge-success">e</span> ，差異約有
+					<span class="badge badge-pill fontCust badge-warning">f</span> 人 
+				</p>
+					</li>
+				</ul>
+			</span>
+		</div>
+		<div class="chart-container row">
+			<canvas id="canvas_figE" >各縣市不同時段的當下人潮</canvas>
+		</div>
+	</div>
+
+
+
+	<div id="fig_f_and_g" class="container mainFig">
+		<div class="jumbotron" id='figf_Area' style='background-color: #f2f4f7;'>
+			<h2 class="d-flex flex-column justify-content-center align-items-center">活動到訪居民比例</h2>
+			<hr class="my-4">
+			<span id ='figF_comment_1'>
+				<!-- fix it on js  -->
+				<ul>
+					<li>
+						<p> 活動整體參加的人以 
+							<span class="badge badge-pill fontCust badge-primary">a</span> 的人次最多，約有
+							<span class="badge badge-pill fontCust badge-success">b</span> 人，占整體的
+							<span class="badge badge-pill fontCust badge-warning">C%</span>
+						</p>
+					</li>
+				</ul>
+			</span>
+			<span id ='figG_comment_1'>
+				<!-- fix it on js  -->
+				<ul>
+					<li>
+						<p>細看鄉鎮區，最多到訪的人次為 
+							<span class="badge badge-pill fontCust badge-primary">A</span> ，到訪人數約有
+							<span class="badge badge-pill fontCust badge-success">B</span> 人，約占
+							<span class="badge badge-pill fontCust badge-primary">C</span> 的到訪人數中的
+							<span class="badge badge-pill fontCust badge-warning">D%</span>
+						</p>
+					</li>
+				</ul>
+			</span>
+		</div>
+		<div class="row">
+			<div style="width:50%;" id="fig_f" class="col chart-container">
+				<canvas id="canvas_figF" height="200"></canvas>
+			</div>
+			<div style="width:50%;" id="fig_g" class="col chart-container">
+				<canvas id="canvas_figG" height="200"></canvas>
+			</div>
+		</div>
+
+		<div class="row">
+			<div style="width:50%;" id="table_f" class="col">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">縣市</th>
+							<th scope="col">人次</th>
+							<th scope="col">占比</th>
+						</tr>
+					</thead>
+					<tbody id="table_f_tbody" style="line-height: 15px;">
+						<tr>
+							<th scope="row">1</th>
+							<td>台北市</td>
+							<td>52020</td>
+							<td>30%</td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>新北市</td>
+							<td>25639</td>
+							<td>20%</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div style="width:50%;" id="table_g" class="col">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">鄉鎮區</th>
+							<th scope="col">人次</th>
+							<th scope="col">占比</th>
+						</tr>
+					</thead>
+					<tbody id="table_g_tbody" style="line-height: 15px;">
+						<tr>
+							<th scope="row">1</th>
+							<td>中正區</td>
+							<td>52020</td>
+							<td>30%</td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>大安區</td>
+							<td>25639</td>
+							<td>20%</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+		</div>
+	</div>
+
+
+
+	<div id="fig_h_and_i" class="container mainFig">
+		<div class="jumbotron" id='figh_Area' style='background-color: #f2f4f7;'>
+		  <h2 class="d-flex flex-column justify-content-center align-items-center">各年齡層不同時段的當下人潮</h2>
+		  <hr class="my-4">
+			<span id ='figH_comment_1'>
+				<ul>
+					<li>
+						<!-- fix it on js  -->
+						<p>活動期間增減差異最多的群族為
+							<span class="badge badge-pill fontCust badge-primary">a</span> ，現場人數最多的時間點在
+							<span class="badge badge-pill fontCust badge-dark">b</span> ，而最少的時間點在
+							<span class="badge badge-pill fontCust badge-dark">c</span> 
+						</p>
+					</li>
+				</ul>
+			</span>
+			<span id ='figH_comment_2'>
+				<ul>
+					<li>
+						<!-- fix it on js  -->
+						<p>活動期間增減最少的群族為
+							<span class="badge badge-pill fontCust badge-primary">a</span> ，現場人數最多的時間點在
+							<span class="badge badge-pill fontCust badge-dark">b</span> ，而最少的時間點在
+							<span class="badge badge-pill fontCust badge-dark">c</span> 
+						</p>
+					</li>
+				</ul>
+			</span>
+			<span id ='figI_comment_1'>
+				<ul>
+					<li>
+						<!-- fix it on js  -->
+						<p>占比最高的年齡族群為
+							<span class="badge badge-pill fontCust badge-primary">a</span> ，最低的年齡族群為
+							<span class="badge badge-pill fontCust badge-primary">b</span> ，兩者占比
+							<span class="badge badge-pill fontCust badge-warning">c%</span> 
+						</p>
+					</li>
+				</ul>
+			</span>
+
+			<span id ='figI_comment_2'>
+				<ul>
+					<li>
+						<!-- fix it on js  -->
+						<p>平均停留時間最久的年齡族群為
+							<span class="badge badge-pill fontCust badge-primary">a</span> ，最短的年齡族群為
+							<span class="badge badge-pill fontCust badge-primary">b</span> ，相差
+							<span class="badge badge-pill fontCust badge-secondary">c</span> 分鐘
+						</p>
+					</li>
+				</ul>
+			</span>
+
+
+		</div>
+		<div class="row">
+			<div id="fig_h" class="col col-8 chart-container">
+				<canvas id="canvas_figH" height="200">各年齡層不同時段的當下人潮</canvas>
+			</div>
+			<div id="fig_i" class="col col-4 chart-container">
+				<canvas id="canvas_figI" height="420">各年齡層的活動占比及停留時間</canvas>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div id="fig_j_and_k" class="container mainFig">
+		<div class="jumbotron" id='figj_Area' style='background-color: #f2f4f7;'>
+		  <h2 class="d-flex flex-column justify-content-center align-items-center">各地區參與活動的平均年齡</h2>
+		  <hr class="my-4">
+			<span id ='figJ_comment_1'>
+				<ul>
+					<li>
+						<!-- fix it on js  -->
+						<p>人潮最多的縣市為 
+							<span class="badge badge-pill fontCust badge-primary">a</span> ，其平均年齡為
+							<span class="badge badge-pill fontCust badge-success">b</span> ，次者
+							<span class="badge badge-pill fontCust badge-primary">c</span> 地區的平均年齡為
+							<span class="badge badge-pill fontCust badge-success">d</span> 
+						</p>
+					</li>
+				</ul>
+			</span>
+			<span id ='figK_comment_1'>
+				<ul>
+					<li>
+						<!-- fix it on js  -->
+						<p>細看鄉鎮區，人潮最多的鄉鎮區為
+							<span class="badge badge-pill fontCust badge-primary">a</span> ，其平均年齡為
+							<span class="badge badge-pill fontCust badge-success">b</span> ，次者
+							<span class="badge badge-pill fontCust badge-primary">c</span> 地區的平均年齡為
+							<span class="badge badge-pill fontCust badge-success">d</span> 
+						</p>
+					</li>
+				</ul>
+			</span>
+
+		</div>
+		<div class="row">
+			<div id="fig_J" class="col col-6 chart-container">
+				<canvas id="canvas_figJ" height="200">各縣市參與活動的平均年齡</canvas>
+			</div>
+			<div id="fig_K" class="col col-6 chart-container">
+				<canvas id="canvas_figK" height="200">各行政區參與活動的平均年齡</canvas>
+			</div>
+		</div>
+	</div>
+
+		<script src="./vis_js/figa.js"></script>
+		<script src="./vis_js/figb.js"></script>
+		<script src="./vis_js/figc.js"></script>
+		<script src="./vis_js/figd.js"></script>
+		<script src="./vis_js/fige.js"></script>
+		<script src="./vis_js/figf.js"></script>
+		<script src="./vis_js/figg.js"></script>
+		<script src="./vis_js/figh.js"></script>
+		<script src="./vis_js/figi.js"></script>
+		<script src="./vis_js/figj.js"></script>
+		<script src="./vis_js/figk.js"></script>
+
+	<style>
+		canvas {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+		}
+		@media only screen and (max-width: 1024px) {
+			.customFont{
+				font-size:34px;
+			}
+		}
+		@media only screen and (min-width: 1024px) {
+			.customFont{
+				font-size:16px;
+			}
+		}
+		.fontCust{
+			font-size: 1.2em;
+		}
+	</style>
+</body>
+
+</html>
