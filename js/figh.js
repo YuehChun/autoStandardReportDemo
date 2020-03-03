@@ -1,8 +1,8 @@
-		var figH_data=[];
-		var figH_comment_1=[];
+		//var figH_data=[];
+		//var figH_comment_1=[];
 
 
-		function comH1DataIsReady() {
+		function comH1DataIsReady(figH_comment_1) {
 			var content_com_h_1 ="<ul>"
 			figH_comment_1.map(function(comm){
 				content_com_h_1+= '<li><p>活動期間增減差異最多的群族為\
@@ -15,7 +15,7 @@
 			$("#fig_h_and_i #figH_comment_1").html(content_com_h_1);
 		}
 
-		function comH2DataIsReady() {
+		function comH2DataIsReady(figH_comment_2) {
 			var content_com_h_2 ="<ul>"
 			figH_comment_2.map(function(comm){
 				content_com_h_2+= '<li><p>活動期間增減差異最多的群族為\
@@ -27,7 +27,7 @@
 			content_com_h_2+="</ul>";
 			$("#fig_h_and_i #figH_comment_2").html(content_com_h_2);
 		}
-		function figHDataIsReady() {
+		function figHDataIsReady(figH_data) {
 			var h_data=[];
 			var figHSumArr=[];
 			var tempSortArr=[];
@@ -141,10 +141,11 @@
 				},
 				options: {
 					responsive: true,
+                    maintainAspectRatio: false,
 					title: {
 						display: true,
 						text: '各年齡層不同時段的當下人潮',
-						fontSize: 24
+						fontSize: 18
 					},
 					tooltips: {
 						mode: 'index',
@@ -162,7 +163,7 @@
 								labelString: '活動時間'
 							},
 							ticks: {
-				                fontSize: 14
+				                fontSize: 18
 				            }
 						}],
 						yAxes: [{
@@ -175,13 +176,13 @@
 								labelString: '人次'
 							},
 							ticks: {
-				                fontSize: 14
+				                fontSize: 18
 				            }
 						}],
 					},
 					legend: {
 			            labels: {
-				               fontSize: 20
+				               fontSize: 18
 			            }
 			        }
 				}
@@ -190,6 +191,9 @@
 			new Chart(ctx_figH, configFigH);
 		}
 
+
+
+        /*
 		d3.csv("./data/h_com_1.csv", ).row(function(d) { 
 		 	return {'a': d.a, 'b': d.b, 'c': d.c};
 		}).get(function(error, rows) {
@@ -209,4 +213,4 @@
 		}).get(function(error, rows) {
 			figH_data=rows;
 			figHDataIsReady();
-		});
+		});*/

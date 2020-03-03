@@ -1,7 +1,7 @@
-		var figJ_data=[];
-		var figJ_comment_1=[];
+		//var figJ_data=[];
+		//var figJ_comment_1=[];
 
-		function comJ1DataIsReady() {
+		function comJ1DataIsReady(figJ_comment_1) {
 			
 			var content_com_j_1 ="<ul>"
 			figJ_comment_1.map(function(comm){
@@ -16,7 +16,7 @@
 			$("#fig_j_and_k #figJ_comment_1").html(content_com_j_1);
 		}
 
-		function figJDataIsReady() {
+		function figJDataIsReady(figJ_data) {
 			var figJSinLog=[]
 			var figJBarVal=[]
 			
@@ -63,11 +63,12 @@
 				type: 'bar',
 				data: dataFigJ,
 				options: {
-					responsive: true,
+				    responsive: true,
+				    maintainAspectRatio: false,
 					title: {
 						display: true,
 						text: '各縣市的平均年齡',
-						fontSize: 24
+						fontSize: 18
 					},
 				    legend: {
 				        display: false
@@ -89,7 +90,7 @@
 							ticks: {
 			                    suggestedMin: minAge,
 			                    suggestedMax: maxAge,
-				                fontSize: 14
+				                fontSize: 18
 			                },
 						}],
 					}
@@ -100,6 +101,9 @@
 			new Chart(ctx_figJ, configFigJ);
 		}
 
+
+
+        /*
 		d3.csv("./data/j_com_1.csv", ).row(function(d) { 
 			return {'a': d.a, 'b': parseInt(d.b),'c': d.c, 'd': parseInt(d.d)}; 
 		}).get(function(error, rows) {
@@ -114,5 +118,5 @@
 			figJ_data=rows;
 			figJDataIsReady();
 		});
-
+        */
 

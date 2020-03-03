@@ -1,8 +1,8 @@
-		var figF_data=[];
-		var figF_comment_1=[];
-		var figF_table=[];
+		//var figF_data=[];
+		//var figF_comment_1=[];
+		//var figF_table=[];
 
-		function comF1DataIsReady() {
+		function comF1DataIsReady(figF_comment_1) {
 			var content_com_f_1 ="<ul>"
 			figF_comment_1.map(function(comm){
 				content_com_f_1+='<li><p> 活動整體參加的人以 \
@@ -15,7 +15,7 @@
 			content_com_f_1+="</ul>";
 			$("#fig_f_and_g #figF_comment_1").html(content_com_f_1);
 		}
-		function tableF1DataIsReady() {
+		function tableF1DataIsReady(figF_table) {
 			var sort_num_f=1;
 			var content_table_f_1 ="";
 			var tableFValLog=[];
@@ -38,9 +38,10 @@
 			});
 			$("#table_f_tbody").html(content_table_f_1);
 		}
-		var figFSinLog=[]
-		var figFValLog=[]
-		function figFDataIsReady() {
+
+		function figFDataIsReady(figF_data) {
+		    var figFSinLog = [];
+		    var figFValLog = [];
 			figF_data.map(function(t){
 				figFValLog.push({'otype' : t.otype, 'percent' : t.percent});
 
@@ -79,8 +80,9 @@
 				},
 				options: {
 					responsive: true,
+					maintainAspectRatio: false,
 					legend: {
-						position: 'bottom',
+						position: 'left',
 						labels: {
 							fontSize: 18
 						}
@@ -88,10 +90,10 @@
 					title: {
 						display: true,
 						text: '縣市居民統計比例',
-						fontSize: 24
+						fontSize: 18
 					},
 					tooltips: {
-						bodyFontSize: 18
+						bodyfontSize: 18
 					},
 					animation: {
 						animateScale: true,
@@ -103,7 +105,10 @@
 			var ctx_figF = document.getElementById('canvas_figF').getContext('2d');
 			new Chart(ctx_figF, configFigF);
 		}
+        
 
+
+/*
 		d3.csv("./data/f_com_1.csv", ).row(function(d) { 
 		 	return {'a': d.a, 'b': parseInt(d.b), 'c': parseFloat(d.c)}; 
 	    }).get(function(error, rows) {
@@ -125,3 +130,4 @@
 	    	figF_table=rows
 	    	tableF1DataIsReady();
 	    });
+        */

@@ -1,8 +1,8 @@
-		var figD_data=[];
-		var figD_comment_1=[];
+		//var figD_data=[];
+		//var figD_comment_1=[];
 
 
-		function comD1DataIsReady() {
+		function comD1DataIsReady(figD_comment_1) {
 			var content_com_d_1 ="<ul>"
 			figD_comment_1.map(function(comm){
 				content_com_d_1+='<li><p>以當地 \
@@ -17,7 +17,7 @@
 			content_com_d_1+="</ul>";
 			$("#fig_D #figD_comment_1").html(content_com_d_1);
 		}
-		function figDDataIsReady() {
+		function figDDataIsReady(figD_data) {
 			var d_data=[]
 			var figDSumArr=[]
 			var tempSortArr=[]
@@ -98,6 +98,7 @@
 						fill: false,
 						data: dataArrFigD[0],
 						yAxisID: 'y-axis-1',
+						fontSize: 18
 					}, {
 						label: sinArrFigD[1],
 						backgroundColor: color(window.chartColors.orange).alpha(0.9).rgbString(),
@@ -105,6 +106,7 @@
 						fill: false,
 						data: dataArrFigD[1],
 						yAxisID: 'y-axis-2',
+						fontSize: 18
 					}, {
 						label: sinArrFigD[2],
 						backgroundColor: color(window.chartColors.yellow).alpha(0.9).rgbString(),
@@ -112,6 +114,7 @@
 						fill: false,
 						data: dataArrFigD[2],
 						yAxisID: 'y-axis-2',
+						fontSize: 18
 					}, {
 						label: sinArrFigD[3],
 						backgroundColor: color(window.chartColors.green).alpha(0.9).rgbString(),
@@ -119,6 +122,7 @@
 						fill: false,
 						data: dataArrFigD[3],
 						yAxisID: 'y-axis-2',
+						fontSize: 18
 					}, {
 						label: sinArrFigD[4],
 						backgroundColor: color(window.chartColors.blue).alpha(0.9).rgbString(),
@@ -126,13 +130,21 @@
 						fill: false,
 						data: dataArrFigD[4],
 						yAxisID: 'y-axis-2',
+						fontSize: 18
 					}]
 				},
 				options: {
 					responsive: true,
+					maintainAspectRatio: false,
 					title: {
-						display: true,
-						text: '各縣市不同時段的當下人潮'
+					    display: true,
+					    text: '各縣市不同時段的當下人潮',
+					    fontSize: 18
+					},
+					legend: {
+					    labels: {
+					        fontSize: 18
+					    }
 					},
 					tooltips: {
 						mode: 'index',
@@ -178,7 +190,10 @@
 			var ctx_figD = document.getElementById('canvas_figD').getContext('2d');
 			new Chart(ctx_figD, configFigD);
 		}
+        
 
+
+        /*
 		d3.csv("./data/d_com_1.csv", ).row(function(d) { 
 		 	return {'a': d.a, 'b': d.b, 'c': parseInt(d.c, 10), 'd': d.d, 'e': parseInt(d.e, 10), 'f': parseFloat(d.f)};
 	    }).get(function(error, rows) {
@@ -192,3 +207,4 @@
 	    	figD_data=rows;
 	    	figDDataIsReady();
 	    });
+        */

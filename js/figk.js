@@ -1,7 +1,7 @@
-		var figK_data=[];
-		var figK_comment_1=[];
+		//var figK_data=[];
+		//var figK_comment_1=[];
 
-		function comK1DataIsReady() {
+		function comK1DataIsReady(figK_comment_1) {
 			var content_com_j_1 ="<ul>"
 			figK_comment_1.map(function(comm){
 				content_com_j_1+= '<li><p>細看鄉鎮區，人潮最多的鄉鎮區為 \
@@ -15,7 +15,7 @@
 			$("#fig_j_and_k #figK_comment_1").html(content_com_j_1);
 		}
 
-		function figKDataIsReady() {
+		function figKDataIsReady(figK_data) {
 			var figKSinLog=[]
 			var figKBarVal=[]
 			figK_data.map(function(i){
@@ -60,10 +60,11 @@
 				data: dataFigK,
 				options: {
 					responsive: true,
+					maintainAspectRatio: false,
 					title: {
 						display: true,
 						text: '各行政區的平均年齡',
-						fontSize : 24
+						fontSize: 18
 					},
 				    legend: {
 				        display: false
@@ -85,7 +86,7 @@
 							ticks: {
 			                    suggestedMin: minAge,
 			                    suggestedMax: maxAge,
-			                    fontSize : 14,
+			                    fontSize: 18,
 			                }
 						}],
 					}
@@ -96,6 +97,8 @@
 			new Chart(ctx_figK, configFigK);
 		}
 
+
+        /*
 		d3.csv("./data/k_com_1.csv", ).row(function(d) { 
 			return {'a': d.a, 'b': parseInt(d.b),'c': d.c, 'd': parseInt(d.d)}; 
 		}).get(function(error, rows) {
@@ -110,5 +113,5 @@
 			figK_data=rows;
 			figKDataIsReady();
 		});
-
+        */
 

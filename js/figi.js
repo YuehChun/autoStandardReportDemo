@@ -1,9 +1,9 @@
-		var figI_data=[];
-		var figI_comment_1=[];
-		var figI_comment_2=[];
+		//var figI_data=[];
+		//var figI_comment_1=[];
+		//var figI_comment_2=[];
 
 
-		function comI1DataIsReady() {
+		function comI1DataIsReady(figI_comment_1) {
 			var content_com_i_1 ="<ul>"
 			figI_comment_1.map(function(comm){
 				content_com_i_1+= '<li><p>占比最高的年齡族群為\
@@ -16,7 +16,7 @@
 			$("#fig_h_and_i #figI_comment_1").html(content_com_i_1);
 		}
 
-		function comI2DataIsReady() {
+		function comI2DataIsReady(figI_comment_2) {
 			var content_com_i_2 ="<ul>"
 			figI_comment_2.map(function(comm){
 				content_com_i_2+= '<li><p>平均停留時間最久的年齡族群為\
@@ -29,7 +29,7 @@
 			$("#fig_h_and_i #figI_comment_2").html(content_com_i_2);
 		}
 
-		function figIDataIsReady() {
+		function figIDataIsReady(figI_data) {
 			var figISinLog=[]
 			var figIBarVal=[]
 			var figILineVal=[]
@@ -89,7 +89,8 @@
 					borderWidth: 5,
 					fill: false,
 					data: LineArrFigI,
-					yAxisID: 'y-axis-2'
+					yAxisID: 'y-axis-2',
+
 				}, {
 					type: 'bar',
 					label: '人數占比',
@@ -99,18 +100,18 @@
 					borderWidth: 2,
 					yAxisID: 'y-axis-1'
 				}]
-
-			};
+				};
 
 			var configFigI = {
 				type: 'bar',
 				data: dataFigI,
 				options: {
-					responsive: true,
+				    responsive: true,
+				    maintainAspectRatio: false,
 					title: {
 						display: true,
 						text: '族群人次及平均停留時間',
-						fontSize: 24
+						fontSize: 18
 					},
 					tooltips: {
 						mode: 'index',
@@ -127,7 +128,7 @@
 								labelString: '參與活動人數占比(%)'
 							},
 							ticks: {
-				                fontSize: 14
+				                fontSize: 18
 				            }
 						}, {
 							type: 'linear',
@@ -142,15 +143,10 @@
 								drawOnChartArea: false, // only want the grid lines for one axis to show up
 							},
 							ticks: {
-				                fontSize: 14
+				                fontSize: 18
 				            }
 						}],
-					},
-					legend: {
-			            labels: {
-				               fontSize: 20
-			            }
-			        }
+					}
 				}
 			}
 
@@ -158,6 +154,8 @@
 			new Chart(ctx_figI, configFigI);
 		}
 
+
+        /*
 		d3.csv("./data/i_com_1.csv", ).row(function(d) { 
 			return {'a': d.a, 'b': d.b, 'c': parseFloat(d.c)}; 
 		}).get(function(error, rows) {
@@ -178,5 +176,5 @@
 			figI_data=rows;
 			figIDataIsReady();
 		});
-
+        */
 

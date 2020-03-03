@@ -1,8 +1,8 @@
-		var figE_data=[];
-		var figE_comment_1=[];
+		//var figE_data=[];
+		//var figE_comment_1=[];
 
 
-		function comE1DataIsReady() {
+		function comE1DataIsReady(figE_comment_1) {
 			var content_com_e_1 ="<ul>"
 			figE_comment_1.map(function(comm){
 
@@ -18,7 +18,7 @@
 			content_com_e_1+="</ul>";
 			$("#fig_E #figE_comment_1").html(content_com_e_1);
 		}
-		function figEDataIsReady() {
+		function figEDataIsReady(figE_data) {
 			var e_data=[]
 			var figESumArr=[]
 			var tempSortArr=[]
@@ -131,10 +131,11 @@
 				},
 				options: {
 					responsive: true,
+					maintainAspectRatio: false,
 					title: {
 						display: true,
 						text: '各鄉鎮不同時段的當下人潮',
-						fontSize: 24
+						fontSize: 18
 					},
 					tooltips: {
 						mode: 'index',
@@ -152,7 +153,7 @@
 								labelString: '活動時間'
 							},
 							ticks: {
-				                fontSize: 14
+				                fontSize: 18
 				            }
 						}],
 						yAxes: [{
@@ -165,13 +166,13 @@
 								labelString: '人次'
 							},
 							ticks: {
-				                fontSize: 14
+				                fontSize: 18
 				            }
 						}],
 					},
 					legend: {
 			            labels: {
-				               fontSize: 20
+				               fontSize: 18
 			            }
 			        }
 				}
@@ -179,7 +180,10 @@
 			var ctx_figE = document.getElementById('canvas_figE').getContext('2d');
 			new Chart(ctx_figE, configFigE);
 		}
+        
 
+
+        /*
 		d3.csv("./data/e_com_1.csv", ).row(function(d) { 
 		 	return {'a': d.a, 'b': d.b, 'c': parseInt(d.c, 10), 'd': d.d, 'e': parseInt(d.e, 10), 'f': parseInt(d.f)};
 		}).get(function(error, rows) {
@@ -193,3 +197,4 @@
 			figE_data=rows;
 			figEDataIsReady();
 		});
+        */

@@ -1,9 +1,9 @@
-		var figC_data=[];
-		var figC_comment_1=[];
-		var figC_comment_2=[];
+		//var figC_data=[];
+		//var figC_comment_1=[];
+		//var figC_comment_2=[];
 
 
-		function comC1DataIsReady() {
+		function comC1DataIsReady(figC_comment_1) {
 			var content_com_c_1 ="<ul>"
 			figC_comment_1.map(function(comm){
 				content_com_c_1+='<li><p>活動期間\
@@ -18,37 +18,37 @@
 			content_com_c_1+="</ul>";
 			$("#fig_b_and_c #figC_comment_1").html(content_com_c_1);
 		}
-		function figCDataIsReady() {
+		function figCDataIsReady(figC_data) {
 			var figCSinLog=[]
 			var figCBarVal=[]
 			var figCLineVal=[]
 			for (var i in figC_data){
 				e=figC_data[i]
-				if (e['sinlog']=='停留5分鐘以下'){
-					reName='a#'+e['sinlog']
-				}else if(e['sinlog']=='停留5-10分鐘'){
-					reName='b#'+e['sinlog']
-				}else if(e['sinlog']=='停留11-20分鐘'){
-					reName='c#'+e['sinlog']
-				}else if(e['sinlog']=='停留21-30分鐘'){
-					reName='d#'+e['sinlog']
-				}else if(e['sinlog']=='停留31-60分鐘'){
-					reName='e#'+e['sinlog']
-				}else if(e['sinlog']=='60分鐘以上'){
-					reName='f#'+e['sinlog']
-				}
-
-				if(figCSinLog.indexOf(reName)==-1){
-					figCSinLog.push(reName)
-				}
-				if(!(reName in figCBarVal)){
-					figCBarVal[reName]=e['cnt']
-				}
-				if(!(reName in figCLineVal)){
-					figCLineVal[reName]=e['avgTime']
+				if(e['sinlog']!='other'){
+					if (e['sinlog']=='停留10分鐘以下'){
+						reName='a#'+e['sinlog']
+					}else if(e['sinlog']=='停留11-60分鐘'){
+						reName='b#'+e['sinlog']
+					}else if(e['sinlog']=='停留61-120分鐘'){
+						reName='c#'+e['sinlog']
+					}else if(e['sinlog']=='停留120分鐘以上'){
+						reName='d#'+e['sinlog']
+					}
+					if(figCSinLog.indexOf(reName)==-1){
+						figCSinLog.push(reName)
+					}
+					if(!(reName in figCBarVal)){
+						figCBarVal[reName]=e['cnt']
+					}
+					if(!(reName in figCLineVal)){
+						figCLineVal[reName]=e['avgTime']
+					}
 				}
 			}
 			figCSinLog.sort();
+			console.log(figCSinLog)
+			console.log(figCBarVal)
+			console.log(figCLineVal)
 			CallDrawFigC(figCSinLog,figCBarVal,figCLineVal);
 		}
 
@@ -91,10 +91,11 @@
 				data: dataFigC,
 				options: {
 					responsive: true,
+					maintainAspectRatio: false,
 					title: {
 						display: true,
 						text: '族群人次及平均停留時間',
-						fontSize: 24
+						fontSize: 18
 					},
 					tooltips: {
 						mode: 'index',
@@ -111,7 +112,7 @@
 								labelString: '不重複人次'
 							},
 							ticks: {
-				                fontSize: 14
+				                fontSize: 18
 				            }
 						}, {
 							type: 'linear',
@@ -126,7 +127,7 @@
 								drawOnChartArea: false, // only want the grid lines for one axis to show up
 							},
 							ticks: {
-				                fontSize: 14
+				                fontSize: 18
 				            }
 						}],
 					}
@@ -136,19 +137,3 @@
 			var ctx_figc = document.getElementById('canvas_figc').getContext('2d');
 			new Chart(ctx_figc, configFigC);
 		}
-
-		d3.csv("./data/c_com_1.csv", ).row(function(d) { 
-			return {'a': d.a, 'b': d.b, 'c': d.c, 'd': d.d, 'e': d.e}; 
-		}).get(function(error, rows) {
-			figC_comment_1=rows
-			comC1DataIsReady();
-		});
-
-		d3.csv("./data/c_fig.csv", ).row(function(d) { 
-			return {'sinlog': d.sinlog, 'cnt': parseInt(d.cnt), 'avgTime': parseInt(d.avg_time)}; 
-		}).get(function(error, rows) {
-			figC_data=rows;
-			figCDataIsReady();
-		});
-
-

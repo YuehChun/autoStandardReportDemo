@@ -1,6 +1,6 @@
-		var figB_data=[];
-		var figB_comment_1=[];
-		function comB1DataIsReady() {
+		//var figB_data=[];
+		//var figB_comment_1=[];
+		function comB1DataIsReady(figB_comment_1) {
 			var content_com_b_1 ='<ul>'
 			for(var com1 in figB_comment_1){
 				content_com_b_1+=
@@ -15,22 +15,20 @@
 		}
 		var figBSinLog=[]
 		var figBValLog=[]
-		function figbDataIsReady() {
+		
+		function figbDataIsReady(figB_data) {
 			for (var i in figB_data){
 				e=figB_data[i]
-				if (e['sinlog']=='停留5分鐘以下'){
-					reName='a#'+e['sinlog']
-				}else if(e['sinlog']=='停留5-10分鐘'){
-					reName='b#'+e['sinlog']
-				}else if(e['sinlog']=='停留11-20分鐘'){
-					reName='c#'+e['sinlog']
-				}else if(e['sinlog']=='停留21-30分鐘'){
-					reName='d#'+e['sinlog']
-				}else if(e['sinlog']=='停留31-60分鐘'){
-					reName='e#'+e['sinlog']
-				}else if(e['sinlog']=='60分鐘以上'){
-					reName='f#'+e['sinlog']
+				if (e.sinlog=='停留10分鐘以下'){
+					reName='a#'+e.sinlog
+				}else if(e.sinlog=='停留11-60分鐘'){
+					reName='b#'+e.sinlog
+				}else if(e.sinlog=='停留61-120分鐘'){
+					reName='c#'+e.sinlog
+				}else if(e.sinlog=='停留120分鐘以上'){
+					reName='d#'+e.sinlog
 				}
+
 				if(figBSinLog.indexOf(reName)==-1){
 					figBSinLog.push(reName)
 				}
@@ -56,29 +54,28 @@
 					datasets: [{
 						data: dataArrFigb,
 						backgroundColor: [
-							window.chartColors.red,
-							window.chartColors.orange,
-							window.chartColors.yellow,
-							window.chartColors.green,
-							window.chartColors.blue,
 							window.chartColors.grey,
+							window.chartColors.blue,
+							window.chartColors.orange,
+							window.chartColors.green,
 						],
 						label: '停留時間'
 					}],
 					labels: sinLogArrFigB
 				},
 				options: {
-					responsive: true,
+				    responsive: true,
+				    maintainAspectRatio: false,
 					legend: {
 						position: 'bottom',
 						labels: {
-							fontSize: 14
+							fontSize: 18
 						}
 					},
 					title: {
 						display: true,
 						text: '停留時間比例',
-						fontSize: 24
+						fontSize: 18
 					},
 					animation: {
 						animateScale: true,
@@ -91,16 +88,3 @@
 			new Chart(ctx_figb, configFigB);
 		}
 
-		d3.csv("./data/b_com_1.csv", ).row(function(d) { 
-		 	return {'a': d.a, 'b': d.b, 'c': d.c, 'd': d.d, 'e': d.e}; 
-	    }).get(function(error, rows) {
-	    	figB_comment_1=rows
-	    	comB1DataIsReady();
-	    });
-
-		d3.csv("./data/b_fig.csv", ).row(function(d) { 
-		 	return {'sinlog': d.sinlog, 'percent': parseFloat(d.percent)}; 
-	    }).get(function(error, rows) {
-	    	figB_data=rows;
-	    	figbDataIsReady();
-	    });

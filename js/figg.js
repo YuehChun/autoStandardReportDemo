@@ -1,7 +1,7 @@
-		var figG_data=[];
-		var figG_comment_1=[];
-		var figG_table=[];
-		function comG1DataIsReady() {
+		//var figG_data=[];
+		//var figG_comment_1=[];
+		//var figG_table=[];
+		function comG1DataIsReady(figG_comment_1) {
 			var content_com_g_1 ="<ul>"
 			figG_comment_1.map(function(comm){
 				content_com_g_1+= '<li><p>細看鄉鎮區，最多到訪的人次為 \
@@ -15,9 +15,10 @@
 			content_com_g_1+="</ul>";
 			$("#fig_f_and_g #figG_comment_1").html(content_com_g_1);
 		}
-		var figGSinLog=[]
-		var figGValLog=[]
-		function figGDataIsReady() {
+
+		function figGDataIsReady(figG_data) {
+        	var figGSinLog=[];
+		    var figGValLog=[];
 			figG_data.map(function(t){
 				figGValLog.push({'otype' : t.otype, 'percent' : t.percent});
 
@@ -31,7 +32,7 @@
 			CallDrawFigG(figGSinLog,figGValLog);
 		}
 
-		function tableG1DataIsReady() {
+		function tableG1DataIsReady(figG_table) {
 			var sort_num=1;
 			var content_table_g_1 ="";
 			var tableGValLog=[];
@@ -83,7 +84,8 @@
 					labels: figGSinLog
 				},
 				options: {
-					responsive: true,
+				    responsive: true,
+				    maintainAspectRatio: false,
 					legend: {
 						position: 'bottom',
 						labels: {
@@ -93,10 +95,10 @@
 					title: {
 						display: true,
 						text: '當地鄉鎮區居民統計比例',
-						fontSize: 24
+						fontSize: 18
 					},
 					tooltips: {
-						bodyFontSize: 18
+						bodyfontSize: 18
 					},
 					animation: {
 						animateScale: true,
@@ -109,6 +111,9 @@
 			new Chart(ctx_figG, configFigG);
 		}
 
+
+
+        /*
 		d3.csv("./data/g_com_1.csv", ).row(function(d) { 
 		 	return {'a': d.a, 'b': parseInt(d.b),'c': d.c, 'd': parseFloat(d.d)}; 
 	    }).get(function(error, rows) {
@@ -130,3 +135,4 @@
 	    	figG_table=rows
 	    	tableG1DataIsReady();
 	    });
+        */

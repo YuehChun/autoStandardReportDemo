@@ -1,9 +1,9 @@
-var figA_data=[];
-		var figA_comment_1=[];
-		var figA_comment_2=[];
+//var figA_data=[];
+//		var figA_comment_1=[];
+//		var figA_comment_2=[];
 
 
-		function comA2DataIsReady() {
+		function comA2DataIsReady(figA_comment_2) {
 			var content_com_a_1 ='<ul>'
 			for(var com1 in figA_comment_2){
 				content_com_a_1+='<li><p>在 \
@@ -14,7 +14,7 @@ var figA_data=[];
 			$("#fig_A #figA_comment_2").html(content_com_a_1);
 		}
 
-		function comA1DataIsReady() {
+		function comA1DataIsReady(figA_comment_1) {
 			var content_com_a_2 ='<ul>'
 			for(var com1 in figA_comment_1){
 				content_com_a_2+='<li><p>在活動期間 \
@@ -25,7 +25,7 @@ var figA_data=[];
 			content_com_a_2+="</ul>"
 			$("#fig_A #figA_comment_1").html(content_com_a_2);
 		}
-		function figaDataIsReady() {
+		function figaDataIsReady(figA_data) {
 			var a_data=[]
 			var sinLogArrFigA=[]
 			var timeLogArrFigA=[]
@@ -36,19 +36,17 @@ var figA_data=[];
 				if(!(e.time_a in a_data)){
 					a_data[e.time_a]=[]
 				}
-				if (e.sinlog=='停留5分鐘以下'){
+
+				if (e.sinlog=='停留10分鐘以下'){
 					reName='a#'+e.sinlog
-				}else if(e.sinlog=='停留5-10分鐘'){
+				}else if(e.sinlog=='停留11-60分鐘'){
 					reName='b#'+e.sinlog
-				}else if(e.sinlog=='停留11-20分鐘'){
+				}else if(e.sinlog=='停留61-120分鐘'){
 					reName='c#'+e.sinlog
-				}else if(e.sinlog=='停留21-30分鐘'){
+				}else if(e.sinlog=='停留120分鐘以上'){
 					reName='d#'+e.sinlog
-				}else if(e.sinlog=='停留31-60分鐘'){
-					reName='e#'+e.sinlog
-				}else if(e.sinlog=='60分鐘以上'){
-					reName='f#'+e.sinlog
 				}
+
 				if(sinLogArrFigA.indexOf(reName)==-1){
 					sinLogArrFigA.push(reName)
 				}
@@ -102,37 +100,33 @@ var figA_data=[];
 						data: dataArrFigA[0],
 					}, {
 						label: sinArrFigA[1],
-						backgroundColor: color(window.chartColors.orange).alpha(0.5).rgbString(),
-						borderColor: window.chartColors.orange,
+						backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+						borderColor: window.chartColors.blue,
 						fill: false,
 						data: dataArrFigA[1],
 					}, {
 						label: sinArrFigA[2],
-						backgroundColor: color(window.chartColors.yellow).alpha(0.5).rgbString(),
-						borderColor: window.chartColors.yellow,
+						backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
+						borderColor: window.chartColors.green,
 						fill: false,
 						data: dataArrFigA[2],
 					}, {
 						label: sinArrFigA[3],
-						backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
-						borderColor: window.chartColors.green,
+						backgroundColor: color(window.chartColors.orange).alpha(0.5).rgbString(),
+						borderColor: window.chartColors.orange,
 						fill: false,
 						data: dataArrFigA[3],
-					}, {
-						label: sinArrFigA[4],
-						backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
-						borderColor: window.chartColors.blue,
-						fill: false,
-						data: dataArrFigA[4],
 					}]
 				},
 				options: {
-					responsive: true,
+				    responsive: true,
+				    maintainAspectRatio: false,
 					title: {
 						display: true,
 						text: '不同族群各時間點當下的人潮',
-						fontSize: 24
+						fontSize: 20
 					},
+				    
 					tooltips: {
 						mode: 'index',
 						intersect: false
@@ -149,24 +143,25 @@ var figA_data=[];
 								labelString: '活動時間'
 							},
 							ticks: {
-				                fontSize: 14
+				                fontSize: 18
 				            }
 						}],
 						yAxes: [{
 							scaleLabel: {
 								display: true,
 								labelString: '不重複人次',
-								fontSize: 14
+								fontSize: 18
 							},
 							ticks: {
-				                fontSize: 14
+				                fontSize: 18
 				            }
 						}]
 					},
 					legend: {
 			            labels: {
-				               fontSize: 20
-			            }
+							fontSize: 18,
+							boxHeight: 5
+						}
 			        }
 				}
 			};
@@ -174,22 +169,45 @@ var figA_data=[];
 			new Chart(ctx_figa, configFigA);
 		}
 
-		d3.csv("./data/a_com_1.csv", ).row(function(d) { 
-		 	return {'a': d.a, 'b': d.b, 'c': parseInt(d.c, 10)}; 
-	    }).get(function(error, rows) {
-	    	figA_comment_1=rows
-	    	comA1DataIsReady();
-	    });
-		d3.csv("./data/a_com_2.csv", ).row(function(d) { 
-		 	return {'a': d.a, 'b':  parseInt(d.b, 10)}; 
-	    }).get(function(error, rows) {
-	    	figA_comment_2=rows
-	    	comA2DataIsReady();
-	    });
+		function getActiveCSVData(url, para) {
+		    var _deferred = $.Deferred();
+		    $.ajax({
+		        type: "POST",
+		        url: url,
+		        data: para,
+		        dataType: "json",
+		        success: function (data) {
+					return _deferred.resolve(data)
+		        }
+		    });
+		    return _deferred.promise();
+		}
 
-		d3.csv("./data/a_fig.csv", ).row(function(d) { 
-		 	return {'time_a': d.time_a, 'sinlog': d.sinlog, 'cnt': parseInt(d.cnt, 10)}; 
-	    }).get(function(error, rows) {
-	    	figA_data=rows;
-	    	figaDataIsReady();
-	    });
+		function getCSVData(url, para, map_function, data_proccess_function) {
+		    $.ajax({
+		        type: "POST",
+		        url: url,
+		        data: para,
+		        dataType: "json",
+		        success: function (data) {
+                    if(data.result=='success'){
+		                rows = $.csv.toObjects(data.csv_data);
+		                rows = rows.map(map_function);
+		                data_proccess_function(rows);
+                    } else {
+                        alert(data.result);
+                    }
+		        }
+		    });
+		}
+
+		function activeCSVDataMapping(data, para, map_function, data_proccess_function) {
+		    var mapping = para['type'];
+		    if (data[mapping] != undefined) {
+		        var csv_data = data[mapping];
+		        rows = $.csv.toObjects(csv_data);
+		        rows = rows.map(map_function);
+		        data_proccess_function(rows);
+		    }
+		}
+        
